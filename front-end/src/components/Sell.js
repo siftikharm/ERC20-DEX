@@ -28,7 +28,7 @@ export default class Sell extends Component {
         } catch (error) {
             alert("Error Selling Tokens");
             console.error(error);
-        }
+        } 
     }
 
     componentDidMount(){

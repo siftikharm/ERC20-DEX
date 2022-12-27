@@ -1,5 +1,3 @@
-const { assert } = require("console");
-
 const Token = artifacts.require('Token');
 
 //every contract block uses seperate instance of the contract
@@ -22,6 +20,7 @@ contract('Token' , async()=>{
         ownerAddress = await token.Owner();
         // console.log("Owner Address : " , ownerAddress);
         // console.log("Accounts[0] : " , accounts[0]);
+        console.log("Owner Address " , ownerAddress);
         assert(ownerAddress == accounts[0]);
     });
 

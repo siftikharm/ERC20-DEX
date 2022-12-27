@@ -21,7 +21,7 @@ contract Exchange {
       return dexBalance;
    }
 
-   function buy() public payable returns (uint256 tokenAmount ) {
+   function buy() public payable returns (uint256) {
       require(msg.value > 0, "You need to send some Ether");
       uint256 amountTobuy = msg.value * tokensPerEth;
 
@@ -29,13 +29,13 @@ contract Exchange {
       require(exchangeBal >= amountTobuy , "Not enough tokens in the reserve");
 
       address user = msg.sender;
+      
       (bool bought) = token.transfer(user, amountTobuy);
       require(bought , "Failed to transfer");
 
       emit BuyTokens(msg.sender , msg.value , amountTobuy);
       return amountTobuy;
    }
-
 
    function sell(uint256 amount) public {
       require(amount > 0, "You need to sell at least some tokens");

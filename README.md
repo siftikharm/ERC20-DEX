@@ -6,9 +6,9 @@ It involves three Smart Contracts:
 2) Exchange
 3) Factory
 
-Token Contract as per ERC20 Standard 
-Exchange Contract provides simple Buy and Sell functions to the user. 
-Factory Contract as Factory Pattern for deploying more than one Tokens. 
+Token Contract as per ERC20 Standard \
+Exchange Contract provides simple Buy and Sell functions to the user.\ 
+Factory Contract as Factory Pattern for deploying more than one Tokens.\ 
 
 
 ### `npm start`
@@ -23,7 +23,7 @@ You need to update Smart Contract addresses and ABI's from /back-end/Build in co
 
 ### `truffle test`
 
-Before this you need to run `Ganache GUI` on your machine
+Before this you need to run `Ganache GUI` on your machine \
 Launches the test runner in the interactive watch mode.
 
 

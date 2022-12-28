@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Web3 from 'web3'; 
-import { EXCHANGE_ABI, EXCHANGE_ADDRESS } from '../config';
+import { EXCHANGE_ABI, EXCHANGE_ADDRESS , TOKEN_ABI , TOKEN_ADDRESS } from '../config';
 
 export default class Buy extends Component {
 
@@ -15,12 +15,20 @@ export default class Buy extends Component {
         const amount = document.getElementById("amt").value;
         console.log("Address : "  , address);
         console.log("Amount :" ,  amount);
-        // this.setState({address: address , amount: amount});
-
+  
         try {
-            const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
-            const accounts = await web3.eth.getAccounts();
-            const request = await this.state.contract.methods.buy().send({from:address , value:amount});
+            const web3 = new Web3(Web3.currentProvider || "http://localhost:8545");
+            let account0;
+            await web3.eth.getAccounts().then(function(result){
+                account0 = result[0];
+            })
+            
+            const token = new web3.eth.Contract(TOKEN_ABI , TOKEN_ADDRESS);
+            console.log("account[0] : "  , account0);
+            let approve = await token.methods.approve(EXCHANGE_ADDRESS , amount).send({from:account0});
+            
+            const exchange = new web3.eth.Contract(EXCHANGE_ABI , EXCHANGE_ADDRESS);
+            const request = await exchange.methods.buy().send({from:address , value:amount});
             alert("Tokens Bought Sucessfully");
         } catch (error) {
             alert("Failed to Buy");

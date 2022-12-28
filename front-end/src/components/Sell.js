@@ -15,15 +15,20 @@ export default class Sell extends Component {
         const amount = document.getElementById("sAmt").value;
         console.log("Address : "  , address);
         console.log("Amount :" ,  amount);
-        // this.setState({address: address , amount: amount}); 
         
         try {
-            const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
-            const accounts = await web3.eth.getAccounts();
+            const web3 = new Web3(Web3.currentProvider || "http://localhost:8545");
+            let account0;
+            await web3.eth.getAccounts().then(function(result){
+                account0 = result[0];
+            })
+            
             const token = new web3.eth.Contract(TOKEN_ABI , TOKEN_ADDRESS);
 
-            let request = await token.methods.approve(EXCHANGE_ADDRESS , amount).send({from:accounts[0]});
-            request = await this.state.contract.sell(amount).send({from:address});
+            let request = await token.methods.approve(EXCHANGE_ADDRESS , amount).send({from:account0});
+            
+            const exchange = new web3.eth.Contract(EXCHANGE_ABI , EXCHANGE_ADDRESS);
+            request = await exchange.methods.sell(amount).send({from:address});
             alert("Tokens sold");
         } catch (error) {
             alert("Error Selling Tokens");
@@ -36,7 +41,7 @@ export default class Sell extends Component {
     }
 
     async loadBlockchain() {
-        const web3 = new Web3(Web3.givenProvider || "http://localhost:8545"); 
+        const web3 = new Web3(Web3.currentProvider || "http://localhost:8545"); 
         const exchange = new web3.eth.Contract(EXCHANGE_ABI , EXCHANGE_ADDRESS);
         this.setState({contract:exchange});
     }

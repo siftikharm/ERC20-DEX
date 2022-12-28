@@ -387,4 +387,4 @@ export const EXCHANGE_ABI = [
     "stateMutability": "nonpayable",
     "type": "function"
   }
-]
+];
